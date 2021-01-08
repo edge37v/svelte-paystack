@@ -3,6 +3,12 @@
   let paystackReady = false;
   let mounted = false;
   export let config = {};
+  export let button
+  export let open
+
+  $: if (open==true) {
+    payInline()
+  }
 
   onMount(() => {
     // The payment-form is ready.
@@ -36,10 +42,13 @@
 
   </script>
 </svelte:head>
-{#if config.embed}
-  <div id="paystackEmbedContainer" />
-{:else}
-  <button type="button" disabled={config.disabled} on:click={payInline}>
-    {config.value || 'Pay with Paystack'}
-  </button>
+
+{#if button}
+  {#if config.embed}
+    <div id="paystackEmbedContainer" />
+  {:else}
+    <button type="button" disabled={config.disabled} on:click={payInline}>
+      {config.value || 'Pay with Paystack'}
+    </button>
+  {/if}
 {/if}
